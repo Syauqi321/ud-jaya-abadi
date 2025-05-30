@@ -27,8 +27,8 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ url('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
-    <link rel="stylesheet"
-        href="{{ url('assets/vendor/css/rtl/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ url('assets/vendor/css/rtl/theme-default.css') }}"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ url('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
@@ -37,8 +37,7 @@
     <link rel="stylesheet" href="{{ url('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <link rel="stylesheet" href="{{ url('assets/vendor/libs/toastr/toastr.css') }}" />
     <link rel="stylesheet" href="{{ url('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
-    <link rel="stylesheet"
-        href="{{ url('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
     <link rel="stylesheet"
         href="{{ url('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
     @stack('vendor-style')
@@ -66,7 +65,7 @@
                 <div class="app-brand demo">
                     <a href="{{ route('index') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                           <img src="{{url('assets/img/favicon/icon.png')}}" alt="Logo" width="32" height="32">
+                            <img src="{{url('assets/img/favicon/icon.png')}}" alt="Logo" width="32" height="32">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">UD. Sejati</span>
                     </a>
@@ -84,7 +83,8 @@
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text" data-i18n="Dashboards">Dashboards</span>
                     </li>
-                    <li class="menu-item {{ (empty(request()->segment(1)) || request()->segment(1) == 'index')?'active':'' }}">
+                    <li
+                        class="menu-item {{ (empty(request()->segment(1)) || request()->segment(1) == 'index') ? 'active' : '' }}">
                         <a href="{{ route('index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
                             <div class="text-truncate" data-i18n="Dashboard">Dashboard</div>
@@ -93,7 +93,7 @@
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text" data-i18n="Proses Produksi">Proses Produksi</span>
                     </li>
-                    <li class="menu-item {{ (request()->segment(2) == 'pemrosesan-bahan')?'active':'' }}">
+                    <li class="menu-item {{ (request()->segment(2) == 'pemrosesan-bahan') ? 'active' : '' }}">
                         <a href="" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
                             <div class="text-truncate" data-i18n="Pemrosesan">Pemrosesan</div>
@@ -121,13 +121,15 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Penjualan">Penjualan</div>
+                                <a href="{{ route('pembelian.index') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                    <div class="text-truncate" data-i18n="Pembelian">Pembelian</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Pembelian">Pembelian</div>
+                                <a href="{{ route('penjualan.index') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                    <div class="text-truncate" data-i18n="Penjualan">Penjualan</div>
                                 </a>
                             </li>
                             {{-- <li class="menu-item">
@@ -140,20 +142,26 @@
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text" data-i18n="Data Master">Data Master</span>
                     </li>
-   <li class="menu-item">
-    <a href="{{ route('bahan.index') }}" class="menu-link">
-        <i class="menu-icon tf-icons ti ti-smart-home"></i>
-        <div class="text-truncate" data-i18n="Master Bahan">Master Bahan</div>
-    </a>
-</li>
+                    <li class="menu-item">
+                        <a href="{{ route('bahan.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <div class="text-truncate" data-i18n="Master Bahan">Master Bahan</div>
+                        </a>
+                    </li>
 
 
                     <li class="menu-item">
-    <a href="{{ route('produk.index') }}" class="menu-link">
-        <i class="menu-icon tf-icons ti ti-smart-home"></i>
-        <div class="text-truncate" data-i18n="Master Produk">Master Produk</div>
-    </a>
-</li>
+                        <a href="{{ route('produk.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <div class="text-truncate" data-i18n="Master Produk">Master Produk</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('harga-jual.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <div class="text-truncate" data-i18n="Master Harga jual">Master Harga jual</div>
+                        </a>
+                    </li>
                     {{-- <li class="menu-item">
                         <a href="" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
@@ -161,11 +169,11 @@
                         </a>
                     </li> --}}
                     <li class="menu-item">
-    <a href="{{ route('pelanggan.index') }}" class="menu-link">
-        <i class="menu-icon tf-icons ti ti-smart-home"></i>
-        <div class="text-truncate" data-i18n="Master Pelanggan">Master Pelanggan</div>
-    </a>
-</li>
+                        <a href="{{ route('pelanggan.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <div class="text-truncate" data-i18n="Master Pelanggan">Master Pelanggan</div>
+                        </a>
+                    </li>
                     {{-- <li class="menu-item">
                         <a href="" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
@@ -201,10 +209,11 @@
                         <!-- Search -->
                         <div class="navbar-nav align-items-center">
                             <div class="nav-item navbar-search-wrapper mb-0">
-                            <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                                <i class="ti ti-search ti-md"></i>
-                                <span class="d-none d-md-inline-block text-muted fw-normal ms-4">Search (Ctrl+/)</span>
-                            </a>
+                                <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
+                                    <i class="ti ti-search ti-md"></i>
+                                    <span class="d-none d-md-inline-block text-muted fw-normal ms-4">Search
+                                        (Ctrl+/)</span>
+                                </a>
                             </div>
                         </div>
                         <!-- /Search -->
@@ -710,7 +719,7 @@
     <script src="<?= url('assets/js/jquery-cookie.min.js') ?>"></script>
     <script>
         function getAuthorization() {
-            return "Bearer "+cookie.get("erp-ud-sejati-token");
+            return "Bearer " + cookie.get("erp-ud-sejati-token");
         }
     </script>
     <script src="<?= url('assets/js/helper-api.js') ?>"></script>

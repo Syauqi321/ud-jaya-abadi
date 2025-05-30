@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\HargaJualController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +35,14 @@ Route::get('/', function () {
 */
 Route::resource('bahan', BahanController::class);
 Route::resource('produk', ProdukController::class);
+Route::resource('harga-jual', HargaJualController::class);
+Route::patch('/harga-jual/{id}/toggle-status', [HargaJualController::class, 'toggleStatus'])->name('harga_jual.toggleStatus');
 Route::resource('pelanggan', PelangganController::class);
 
+/*
+|---------------------------------------------------------------------------
+| Transaksi
+|---------------------------------------------------------------------------
+*/
+Route::resource('pembelian', PembelianController::class);
+Route::resource('penjualan', PenjualanController::class);

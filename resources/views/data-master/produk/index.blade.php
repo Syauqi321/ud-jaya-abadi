@@ -5,7 +5,7 @@
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-0">🛒 Data Produk</h4>
+            <h4 class="fw-bold mb-0">📦 Data Produk</h4>
             <small class="text-muted">Manajemen informasi produk yang tersedia</small>
         </div>
         <a href="{{ route('produk.create') }}" class="btn btn-primary">
