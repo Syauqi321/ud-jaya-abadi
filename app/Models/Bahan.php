@@ -10,9 +10,9 @@ class Bahan extends Model
     protected $primaryKey = 'id_bahan';
     protected $fillable = ['nama', 'stok'];
 
-    public function pembelian()
+    public function detailPembelian()
     {
-        return $this->hasMany(Pembelian::class, 'id_bahan');
+        return $this->hasMany(DetailPembelian::class, 'id_bahan');
     }
 
     public function detailProses()

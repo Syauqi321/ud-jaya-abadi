@@ -13,11 +13,8 @@ return new class extends Migration
     {
      Schema::create('pembelian', function (Blueprint $table) {
     $table->id('id_pembelian');
-    $table->unsignedBigInteger('id_bahan');
-    $table->foreign('id_bahan')->references('id_bahan')->on('bahan')->onDelete('cascade');
     $table->date('tanggal');
-    $table->integer('kuantitas');
-    $table->decimal('harga', 15, 2);
+    $table->decimal('total', 15, 2);
     $table->timestamps();
 });
 

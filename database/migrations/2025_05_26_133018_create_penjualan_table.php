@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
     $table->id('id_penjualan');
+    $table->unsignedBigInteger('id_pelanggan');
     $table->date('tanggal');
-   $table->foreignId('id_pelanggan')->constrained('pelanggan', 'id_pelanggan')->onDelete('cascade');
-$table->foreignId('id_produk')->constrained('produk', 'id_produk')->onDelete('cascade');
-
-    $table->integer('kuantitas');
-    $table->decimal('total_harga', 15, 2);
     $table->timestamps();
+
+    $table->foreign('id_pelanggan')->references('id_pelanggan')->on('pelanggan')->onDelete('cascade');
 });
+
+
 
     }
 

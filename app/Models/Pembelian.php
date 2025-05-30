@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembelian extends Model
 {
-    protected $table = 'pembelian';
     protected $primaryKey = 'id_pembelian';
-    protected $fillable = ['id_bahan', 'tanggal', 'kuantitas', 'harga'];
+    protected $fillable = ['tanggal', 'total'];
 
-    public function bahan()
+    public function detailPembelian()
     {
-        return $this->belongsTo(Bahan::class, 'id_bahan');
+        return $this->hasMany(DetailPembelian::class, 'id_pembelian');
     }
 }
+

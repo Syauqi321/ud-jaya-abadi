@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penjualan extends Model
 {
-    protected $table = 'penjualan';
     protected $primaryKey = 'id_penjualan';
-    protected $fillable = ['tanggal', 'id_pelanggan', 'id_produk', 'kuantitas', 'total_harga'];
+    protected $fillable = ['id_pelanggan', 'tanggal'];
 
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class, 'id_pelanggan');
     }
 
-    public function produk()
+    public function detailPenjualan()
     {
-        return $this->belongsTo(Produk::class, 'id_produk');
+        return $this->hasMany(DetailPenjualan::class, 'id_penjualan');
     }
 }
+
