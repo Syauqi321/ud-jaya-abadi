@@ -37,7 +37,7 @@
                         <tr>
                             <td>{{ $item->id_bahan }}</td>
                             <td>{{ $item->nama }}</td>
-                            <td>{{ $item->stok }}</td>
+                            <td>{{ $item->stok }} kg</td>
                             <td class="text-center">
                                 <a href="{{ route('bahan.edit', $item->id_bahan) }}" class="btn btn-icon btn-sm btn-warning me-1" title="Edit">
                                     <i class="bx bx-pencil"></i>

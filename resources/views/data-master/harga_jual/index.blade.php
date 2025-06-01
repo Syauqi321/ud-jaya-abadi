@@ -40,7 +40,7 @@
                             <td>{{ $item->id_harga }}</td>
                             <td>{{ $item->produk->nama ?? '-' }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                            <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($item->harga, 0, ',', '.') }}/kg</td>
                             <td class="text-center">
                                 <form action="{{ route('harga_jual.toggleStatus', $item->id_harga) }}" method="POST" style="display:inline;">
                                     @csrf
