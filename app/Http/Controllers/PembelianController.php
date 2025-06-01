@@ -49,10 +49,15 @@ class PembelianController extends Controller
                     'kuantitas' => $detail['kuantitas'],
                     'harga' => $detail['harga'],
                 ]);
+
+                // Tambah stok bahan
+                $bahan = Bahan::findOrFail($detail['id_bahan']);
+                $bahan->stok += $detail['kuantitas'];
+                $bahan->save();
             }
         });
 
-        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil disimpan.');
+        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil disimpan dan stok diperbarui.');
     }
 
     public function show($id)
@@ -78,8 +83,16 @@ class PembelianController extends Controller
         ]);
 
         DB::transaction(function () use ($request, $id) {
-            $pembelian = Pembelian::findOrFail($id);
+            $pembelian = Pembelian::with('detailPembelian')->findOrFail($id);
 
+            // Rollback stok bahan dari detail pembelian sebelumnya
+            foreach ($pembelian->detailPembelian as $detailLama) {
+                $bahan = Bahan::findOrFail($detailLama->id_bahan);
+                $bahan->stok -= $detailLama->kuantitas;
+                $bahan->save();
+            }
+
+            // Update data pembelian
             $pembelian->update([
                 'tanggal' => $request->tanggal,
                 'total' => collect($request->details)->sum(function ($detail) {
@@ -87,10 +100,10 @@ class PembelianController extends Controller
                 }),
             ]);
 
-            // Hapus semua detail sebelumnya
+            // Hapus detail lama
             $pembelian->detailPembelian()->delete();
 
-            // Tambahkan data detail yang baru
+            // Tambah detail baru dan update stok bahan
             foreach ($request->details as $detail) {
                 DetailPembelian::create([
                     'id_pembelian' => $pembelian->id_pembelian,
@@ -98,18 +111,31 @@ class PembelianController extends Controller
                     'kuantitas' => $detail['kuantitas'],
                     'harga' => $detail['harga'],
                 ]);
+
+                $bahan = Bahan::findOrFail($detail['id_bahan']);
+                $bahan->stok += $detail['kuantitas'];
+                $bahan->save();
             }
         });
 
-        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil diperbarui.');
+        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil diperbarui dan stok disesuaikan.');
     }
 
     public function destroy($id)
     {
-        $pembelian = Pembelian::findOrFail($id);
+        $pembelian = Pembelian::with('detailPembelian')->findOrFail($id);
+
+        // Kurangi stok bahan sebelum menghapus
+        foreach ($pembelian->detailPembelian as $detail) {
+            $bahan = Bahan::findOrFail($detail->id_bahan);
+            $bahan->stok -= $detail->kuantitas;
+            $bahan->save();
+        }
+
+        // Hapus detail pembelian dan pembeliannya
         $pembelian->detailPembelian()->delete();
         $pembelian->delete();
 
-        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil dihapus.');
+        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil dihapus dan stok dikurangi.');
     }
 }
