@@ -19,5 +19,14 @@ class Penjualan extends Model
     {
         return $this->hasMany(DetailPenjualan::class, 'id_penjualan');
     }
+
+
+    public function getTotalAttribute()
+    {
+        return $this->detailPenjualan->sum(function ($detail) {
+            return $detail->kuantitas * $detail->harga_jual;
+        });
+    }
+
 }
 

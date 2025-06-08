@@ -7,10 +7,10 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>ERP UD. Sejati - @yield('title')</title>
+    <title>UD. Jaya Abadi - @yield('title')</title>
 
-    <meta name="description" content="Sistem Informasi ERP UD. Sejati" />
-    <meta name="keywords" content="dashboard, bootstrap 5, ERP, UD. Sejati">
+    <meta name="description" content="Sistem Informasi UD. Jaya Abadi" />
+    <meta name="keywords" content="dashboard, bootstrap 5, UD. Jaya Abadi">
 
     <link rel="icon" type="image/x-icon" href="{{ url('assets/img/favicon/favicon.ico') }}" />
 
@@ -67,7 +67,7 @@
                         <span class="app-brand-logo demo">
                             <img src="{{url('assets/img/favicon/icon.png')}}" alt="Logo" width="32" height="32">
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold">UD. Sejati</span>
+                        <span class="app-brand-text demo menu-text fw-bold">UD. Jaya Abadi</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -148,8 +148,6 @@
                             <div class="text-truncate" data-i18n="Master Bahan">Master Bahan</div>
                         </a>
                     </li>
-
-
                     <li class="menu-item">
                         <a href="{{ route('produk.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
@@ -662,9 +660,7 @@
                                     <script>
                                         document.write(new Date().getFullYear());
                                     </script>
-                                    UD Sejati. Powered By <a href="https://mascitra.com">Mascitra.com</a>
-                                    {{-- <a href="https://github.com/you-ink" target="_blank"
-                                        class="footer-link text-primary fw-medium">You-Ink</a> --}}
+                                    UD Jaya Abadi.
                                 </div>
                             </div>
                         </div>
