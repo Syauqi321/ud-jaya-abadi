@@ -6,6 +6,7 @@ use App\Http\Controllers\HargaJualController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\ProsesProduksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,3 +47,11 @@ Route::resource('pelanggan', PelangganController::class);
 */
 Route::resource('pembelian', PembelianController::class);
 Route::resource('penjualan', PenjualanController::class);
+
+/*
+|---------------------------------------------------------------------------
+| Produksi
+|---------------------------------------------------------------------------
+*/
+Route::resource('proses-produksi', ProsesProduksiController::class);
+

@@ -93,18 +93,12 @@
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text" data-i18n="Proses Produksi">Proses Produksi</span>
                     </li>
-                    <li class="menu-item {{ (request()->segment(2) == 'pemrosesan-bahan') ? 'active' : '' }}">
-                        <a href="" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Pemrosesan">Pemrosesan</div>
-                        </a>
-                    </li>
-                    {{-- <li class="menu-item">
-                        <a href="" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Mix Produk">Mix Produk</div>
-                        </a>
-                    </li> --}}
+                    <li class="menu-item">
+                                <a href="{{ route('proses-produksi.index') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                    <div class="text-truncate" data-i18n="Proses produksi">Proses produksi</div>
+                                </a>
+                            </li>
                     <li class="menu-item">
                         <a href="" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
