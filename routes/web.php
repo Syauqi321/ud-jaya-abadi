@@ -7,6 +7,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProsesProduksiController;
+use App\Http\Controllers\HasilProduksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,4 +55,5 @@ Route::resource('penjualan', PenjualanController::class);
 |---------------------------------------------------------------------------
 */
 Route::resource('proses-produksi', ProsesProduksiController::class);
+Route::resource('hasil-produksi', HasilProduksiController::class);
 

@@ -100,11 +100,11 @@
                                 </a>
                             </li>
                     <li class="menu-item">
-                        <a href="" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Hasil Produksi">Hasil Produksi</div>
-                        </a>
-                    </li>
+                                <a href="{{ route('hasil-produksi.index') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                    <div class="text-truncate" data-i18n="Hasil produksi">Hasil produksi</div>
+                                </a>
+                            </li>
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text" data-i18n="Transaksi">Transaksi</span>
                     </li>
