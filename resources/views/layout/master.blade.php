@@ -176,9 +176,9 @@
                         <span class="menu-header-text" data-i18n="Laporan">Laporan</span>
                     </li>
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="{{ route('laporan.produksi.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Laporan Penjualan">Laporan Penjualan</div>
+                            <div class="text-truncate" data-i18n="Laporan Produksi">Laporan Produksi</div>
                         </a>
                     </li>
                 </ul>

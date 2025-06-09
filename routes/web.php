@@ -8,6 +8,7 @@ use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProsesProduksiController;
 use App\Http\Controllers\HasilProduksiController;
+use App\Http\Controllers\LaporanProduksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,3 +58,10 @@ Route::resource('penjualan', PenjualanController::class);
 Route::resource('proses-produksi', ProsesProduksiController::class);
 Route::resource('hasil-produksi', HasilProduksiController::class);
 
+/*
+|---------------------------------------------------------------------------
+| Laporan
+|---------------------------------------------------------------------------
+*/
+Route::get('/laporan-produksi', [LaporanProduksiController::class, 'index'])->name('laporan.produksi.index');
+Route::get('/laporan-produksi/pdf', [LaporanProduksiController::class, 'downloadPdf'])->name('laporan.produksi.pdf');

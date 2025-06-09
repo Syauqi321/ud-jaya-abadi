@@ -85,7 +85,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Produk</th>
-                                    <th>Kuantitas</th>
+                                    <th>Kuantitas (kg)</th>
                                     <th>Harga Jual</th>
                                     <th>Subtotal</th>
                                 </tr>
@@ -95,7 +95,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $detail->produk->nama ?? '-' }}</td>
-                                        <td>{{ $detail->kuantitas }}</td>
+                                        <td>{{ $detail->kuantitas }} kg</td>
                                         <td>Rp {{ number_format($detail->harga_jual, 0, ',', '.') }}</td>
                                         <td>Rp {{ number_format($detail->harga_jual * $detail->kuantitas, 0, ',', '.') }}</td>
                                     </tr>
