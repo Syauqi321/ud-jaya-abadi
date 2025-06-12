@@ -64,9 +64,9 @@
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
                     <a href="{{ route('index') }}" class="app-brand-link">
-                        <span class="app-brand-logo demo">
+                        {{-- <span class="app-brand-logo demo">
                             <img src="{{url('assets/img/favicon/icon.png')}}" alt="Logo" width="32" height="32">
-                        </span>
+                        </span> --}}
                         <span class="app-brand-text demo menu-text fw-bold">UD. Jaya Abadi</span>
                     </a>
 
@@ -90,98 +90,122 @@
                             <div class="text-truncate" data-i18n="Dashboard">Dashboard</div>
                         </a>
                     </li>
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" data-i18n="Proses Produksi">Proses Produksi</span>
-                    </li>
-                    <li class="menu-item">
-                                <a href="{{ route('proses-produksi.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                                    <div class="text-truncate" data-i18n="Proses produksi">Proses produksi</div>
-                                </a>
-                            </li>
-                    <li class="menu-item">
-                                <a href="{{ route('hasil-produksi.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                                    <div class="text-truncate" data-i18n="Hasil produksi">Hasil produksi</div>
-                                </a>
-                            </li>
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" data-i18n="Transaksi">Transaksi</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div data-i18n="Transaksi">Transaksi</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ route('pembelian.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                                    <div class="text-truncate" data-i18n="Pembelian">Pembelian</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ route('penjualan.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                                    <div class="text-truncate" data-i18n="Penjualan">Penjualan</div>
-                                </a>
-                            </li>
-                            {{-- <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Marketing">Marketing</div>
-                                </a>
-                            </li> --}}
-                        </ul>
-                    </li>
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" data-i18n="Data Master">Data Master</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('bahan.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Master Bahan">Master Bahan</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('produk.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Master Produk">Master Produk</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('harga-jual.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Master Harga jual">Master Harga jual</div>
-                        </a>
-                    </li>
-                    {{-- <li class="menu-item">
-                        <a href="" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Supplier">Supplier</div>
-                        </a>
-                    </li> --}}
-                    <li class="menu-item">
-                        <a href="{{ route('pelanggan.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Master Pelanggan">Master Pelanggan</div>
-                        </a>
-                    </li>
-                    {{-- <li class="menu-item">
-                        <a href="" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Sales">Sales</div>
-                        </a>
-                    </li> --}}
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" data-i18n="Laporan">Laporan</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('laporan.produksi.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div class="text-truncate" data-i18n="Laporan Produksi">Laporan Produksi</div>
-                        </a>
-                    </li>
-                </ul>
+                    {{-- MENU UNTUK ROLE PEMILIK --}}
+                    @if(auth()->user()->role == 'pemilik')
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text" data-i18n="Transaksi">Transaksi</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div data-i18n="Transaksi">Transaksi</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item">
+                                    <a href="{{ route('pembelian.index') }}" class="menu-link">
+                                        <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                        <div class="text-truncate" data-i18n="Pembelian">Pembelian</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('penjualan.index') }}" class="menu-link">
+                                        <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                        <div class="text-truncate" data-i18n="Penjualan">Penjualan</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text" data-i18n="Data Master">Data Master</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('bahan.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Master Bahan">Master Bahan</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('produk.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Master Produk">Master Produk</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('harga-jual.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Master Harga jual">Master Harga jual</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('pelanggan.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Master Pelanggan">Master Pelanggan</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text" data-i18n="Laporan">Laporan</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('laporan.produksi.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Laporan Produksi">Laporan Produksi</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('laporan.keuangan.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Laporan Keuangan">Laporan Keuangan</div>
+                            </a>
+                        </li>
+                    @endif
+
+                    {{-- MENU UNTUK ROLE ADMIN --}}
+                    @if(auth()->user()->role == 'admin')
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text" data-i18n="Proses Produksi">Proses Produksi</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('proses-produksi.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Proses produksi">Proses produksi</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('hasil-produksi.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Hasil produksi">Hasil produksi</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text" data-i18n="Data Master">Data Master</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('bahan.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Master Bahan">Master Bahan</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('produk.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Master Produk">Master Produk</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text" data-i18n="Laporan">Laporan</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('laporan.produksi.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div class="text-truncate" data-i18n="Laporan Produksi">Laporan Produksi</div>
+                            </a>
+                        </li>
+                    @endif
+
             </aside>
             <!-- / Menu -->
 
@@ -617,10 +641,17 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+
+                                        <a class="dropdown-item" href="#"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="ti ti-logout me-2 ti-sm"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
+
                                     </li>
                                 </ul>
                             </li>
