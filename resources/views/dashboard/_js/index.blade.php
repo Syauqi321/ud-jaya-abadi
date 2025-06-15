@@ -11,17 +11,17 @@
             labels: @json($bulan),
             datasets: [
                 {
-                    label: 'Penjualan',
-                    data: @json($dataPenjualan),
-                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Hijau
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                },
-                {
                     label: 'Pembelian',
                     data: @json($dataPembelian),
                     backgroundColor: 'rgba(255, 99, 132, 0.7)', // Merah
                     borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Penjualan',
+                    data: @json($dataPenjualan),
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Hijau
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
                 }
             ]

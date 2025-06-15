@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
             display: flex;
             width: 900px;
             background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 16px;
             overflow: hidden;
         }
@@ -90,6 +91,8 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         button {
@@ -112,6 +115,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="login-box">
@@ -125,15 +129,17 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div>
-                        <label>Email:</label>
-                        <input type="email" name="email" placeholder="example@gmail.com" value="{{ old('email') }}" required>
+                        <label for="email" style="display: block; font-weight: 600; margin-bottom: 6px;">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="example@gmail.com"
+                            value="{{ old('email') }}" required>
                         @error('email')
                             <div class="error">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
-                        <label>Password:</label>
-                        <input type="password" name="password" placeholder="your password" required>
+                        <label for="password"
+                            style="display: block; font-weight: 600; margin-bottom: 6px;">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="your password" required>
                         @error('password')
                             <div class="error">{{ $message }}</div>
                         @enderror
@@ -144,4 +150,5 @@
         </div>
     </div>
 </body>
+
 </html>
