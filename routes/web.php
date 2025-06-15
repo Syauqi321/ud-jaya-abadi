@@ -1,17 +1,17 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HargaJualController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
-use App\Http\Controllers\ProsesProduksiController;
 use App\Http\Controllers\HasilProduksiController;
+use App\Http\Controllers\ProsesProduksiController;
 use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\LaporanKeuanganController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*

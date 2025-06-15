@@ -55,12 +55,34 @@
 <script>
     let detailIndex = 1;
 
-    document.getElementById('btn-add-detail').addEventListener('click', function() {
+    // Fungsi untuk memperbarui semua dropdown bahan
+    function updateBahanOptions() {
+        const selectedValues = Array.from(document.querySelectorAll('select[name^="details"]'))
+            .map(select => select.value)
+            .filter(val => val !== "");
+
+        document.querySelectorAll('select[name^="details"]').forEach(select => {
+            const currentValue = select.value;
+
+            select.querySelectorAll('option').forEach(option => {
+                if (option.value === "") return;
+
+                if (selectedValues.includes(option.value) && option.value !== currentValue) {
+                    option.disabled = true;
+                } else {
+                    option.disabled = false;
+                }
+            });
+        });
+    }
+
+    // Tambah baris baru
+    document.getElementById('btn-add-detail').addEventListener('click', function () {
         const tbody = document.querySelector('#detail-table tbody');
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>
-                <select name="details[${detailIndex}][id_bahan]" class="form-select" required>
+                <select name="details[${detailIndex}][id_bahan]" class="form-select bahan-select" required>
                     <option value="">Pilih Bahan</option>
                     @foreach($bahan as $item)
                         <option value="{{ $item->id_bahan }}">{{ $item->nama }}</option>
@@ -73,12 +95,25 @@
         `;
         tbody.appendChild(newRow);
         detailIndex++;
+
+        updateBahanOptions(); // Perbarui opsi bahan
+
+        // Tambahkan event listener untuk select baru
+        newRow.querySelector('.bahan-select').addEventListener('change', updateBahanOptions);
     });
 
-    document.querySelector('#detail-table').addEventListener('click', function(e) {
-        if(e.target.classList.contains('btn-remove')) {
+    // Hapus baris
+    document.querySelector('#detail-table').addEventListener('click', function (e) {
+        if (e.target.classList.contains('btn-remove')) {
             e.target.closest('tr').remove();
+            updateBahanOptions(); // Perbarui opsi bahan
         }
     });
+
+    // Event listener awal untuk select bahan yang sudah ada
+    document.querySelectorAll('.bahan-select').forEach(select => {
+        select.addEventListener('change', updateBahanOptions);
+    });
 </script>
+
 @endsection

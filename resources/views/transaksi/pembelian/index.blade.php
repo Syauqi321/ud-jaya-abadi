@@ -98,7 +98,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $detail->bahan->nama ?? '-' }}</td>
-                                        <td>{{ $detail->kuantitas }}</td>
+                                        <td>{{ $detail->kuantitas }} kg</td>
                                         <td>Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
                                         <td>Rp {{ number_format($detail->harga * $detail->kuantitas, 0, ',', '.') }}</td>
                                     </tr>
