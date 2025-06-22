@@ -8,11 +8,11 @@ class ProsesProduksi extends Model
 {
     protected $table = 'proses_produksi';
     protected $primaryKey = 'id_proses';
-    protected $fillable = ['kode_produksi', 'tanggal'];
+    protected $fillable = ['kode_produksi', 'tanggal', 'id_produk', 'kuantitas', 'keterangan'];
 
-    public function dataHasilProduksi()
+    public function produk()
     {
-        return $this->hasMany(DataHasilProduksi::class, 'id_proses');
+        return $this->belongsTo(Produk::class, 'id_produk');
     }
 
     public function detailProses()

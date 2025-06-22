@@ -25,20 +25,34 @@
             <table class="table table-bordered align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>ID</th>
-                        <th>Kode Proses</th>
+                        <th>Kode Produksi</th>
                         <th>Tanggal</th>
-                        <th>Total Bahan</th>
+                        <th>Produk</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($produksi as $item)
                     <tr>
-                        <td>{{ $item->id_proses }}</td>
                         <td>{{ $item->kode_produksi }}</td>
                         <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->detailProses->sum('kuantitas') }} kg</td>
+                        <td>{{ $item->produk->nama ?? '-' }}</td>
+                        <td class="text-center">
+                                <form action="{{ route('proses_produksi.toggleStatus', $item->id_proses) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('PATCH')
+                                    @if($item->status)
+                                        <button class="btn btn-sm btn-success" title="Klik untuk nonaktifkan">
+                                            Selesai
+                                        </button>
+                                    @else
+                                        <button class="btn btn-sm btn-secondary" title="Klik untuk aktifkan">
+                                            Proses
+                                        </button>
+                                    @endif
+                                </form>
+                            </td>
                         <td class="text-center">
                             <!-- Modal Detail -->
                             <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalDetail{{ $item->id_proses }}">
@@ -104,6 +118,28 @@
                         </table>
                     </div>
                 @endif
+
+                <h6 class="fw-bold mb-3">Data Hasil Produksi</h6>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Kode Produksi</th>
+                                <th>Produk</th>
+                                <th>Kuantitas (kg)</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ $item->kode_produksi ?? '-' }}</td>
+                                <td>{{ $item->produk->nama ?? '-' }}</td>
+                                <td>{{ $item->kuantitas }} kg</td>
+                                <td>{{ $item->keterangan ?? '-' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

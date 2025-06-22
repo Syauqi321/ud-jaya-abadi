@@ -15,8 +15,8 @@ class LaporanProduksiController extends Controller
         $tanggalAkhir = $request->get('tanggal_akhir', now()->endOfMonth()->toDateString());
 
         $produksi = ProsesProduksi::with([
-                'detailProses.bahan',       // ambil data bahan dari detail proses
-                'dataHasilProduksi.produk'  // ambil data hasil produksi dan produk terkait
+                'produk',
+                'detailProses.bahan'       // ambil data bahan dari detail proses
             ])
             ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
             ->get();
@@ -30,8 +30,8 @@ class LaporanProduksiController extends Controller
     $tanggalAkhir = $request->get('tanggal_akhir', now()->endOfMonth()->toDateString());
 
     $produksi = ProsesProduksi::with([
+            'produk',
             'detailProses.bahan',
-            'dataHasilProduksi.produk'
         ])
         ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
         ->get();

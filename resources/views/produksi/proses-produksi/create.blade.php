@@ -7,13 +7,6 @@
 
     <form action="{{ route('proses-produksi.store') }}" method="POST">
         @csrf
-        <div class="mb-3 col-md-4">
-            <label for="kode_produksi" class="form-label">Kode Produksi</label>
-            <input type="text" name="kode_produksi" id="kode_produksi" class="form-control" value="{{ old('kode_produksi') }}" required>
-            @error('kode_produksi')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
 
         <div class="mb-3 col-md-4">
             <label for="tanggal" class="form-label">Tanggal</label>

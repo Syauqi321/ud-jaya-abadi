@@ -164,7 +164,7 @@
                     {{-- MENU UNTUK ROLE ADMIN --}}
                     @if(auth()->user()->role == 'admin')
                         <li class="menu-header small text-uppercase">
-                            <span class="menu-header-text" data-i18n="Proses Produksi">Proses Produksi</span>
+                            <span class="menu-header-text" data-i18n="Produksi">Produksi</span>
                         </li>
                         <li class="menu-item">
                             <a href="{{ route('proses-produksi.index') }}" class="menu-link">
@@ -172,12 +172,12 @@
                                 <div class="text-truncate" data-i18n="Proses produksi">Proses produksi</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        {{-- <li class="menu-item">
                             <a href="{{ route('hasil-produksi.index') }}" class="menu-link">
                                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                                 <div class="text-truncate" data-i18n="Hasil produksi">Hasil produksi</div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="menu-header small text-uppercase">
                             <span class="menu-header-text" data-i18n="Data Master">Data Master</span>

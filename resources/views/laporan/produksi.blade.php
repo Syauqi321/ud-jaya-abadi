@@ -40,22 +40,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($produksi as $data)
-                        @foreach ($data->dataHasilProduksi as $hasil)
+                    @forelse ($produksi as $item)
                             <tr>
-                                <td>{{ $hasil->prosesProduksi->kode_produksi ?? '-' }}</td>
-                                <td>{{ $data->tanggal }}</td>
-                                <td>{{ $hasil->produk->nama ?? '-' }}</td>
-                                <td>{{ $data->detailProses->sum('kuantitas') ?? 0 }} kg</td>
-                                <td>{{ $hasil->kuantitas ?? 0 }} kg</td>
+                                <td>{{ $item->kode_produksi ?? '-' }}</td>
+                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ $item->produk->nama ?? '-' }}</td>
+                                <td>{{ $item->detailProses->sum('kuantitas') ?? 0 }} kg</td>
+                                <td>{{ $item->kuantitas ?? 0 }} kg</td>
                                 <td>
                                     @php
-                                        $hargaJual = $hasil->produk->hargaJualAktif;
+                                        $hargaJual = $item->produk->hargaJualAktif;
                                     @endphp
                                     {{ $hargaJual ? 'Rp ' . number_format($hargaJual->harga, 0, ',', '.') . '/kg' : '-' }}
                                 </td>
                             </tr>
-                        @endforeach
                     @empty
                         <tr>
                             <td colspan="6" class="text-center">Tidak ada data produksi</td>

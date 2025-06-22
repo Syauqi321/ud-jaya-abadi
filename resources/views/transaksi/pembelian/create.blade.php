@@ -23,7 +23,7 @@
                 <tr>
                     <th>Bahan</th>
                     <th>Kuantitas</th>
-                    <th>Harga</th>
+                    <th>Harga/kg</th>
                     <th>Aksi</th>
                 </tr>
             </thead>

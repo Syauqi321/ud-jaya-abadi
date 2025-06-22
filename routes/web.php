@@ -65,6 +65,7 @@ Route::resource('penjualan', PenjualanController::class);
 */
 Route::resource('proses-produksi', ProsesProduksiController::class);
 Route::resource('hasil-produksi', HasilProduksiController::class);
+Route::patch('/proses-produksi/{id}/toggle-status', [ProsesproduksiController::class, 'toggleStatus'])->name('proses_produksi.toggleStatus');
 
 /*
 |---------------------------------------------------------------------------
