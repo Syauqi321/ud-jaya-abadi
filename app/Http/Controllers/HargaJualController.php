@@ -61,13 +61,5 @@ class HargaJualController extends Controller
         return redirect()->route('harga-jual.index')->with('success', 'Harga jual berhasil dihapus.');
     }
 
-    public function toggleStatus($id)
-{
-    $harga = HargaJual::findOrFail($id);
-    $harga->status = !$harga->status;
-    $harga->save();
-
-    return redirect()->route('harga-jual.index')->with('success', 'Status berhasil diperbarui.');
-}
 
 }
