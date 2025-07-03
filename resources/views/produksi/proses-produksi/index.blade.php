@@ -28,6 +28,7 @@
                         <th>Kode Produksi</th>
                         <th>Tanggal</th>
                         <th>Produk</th>
+                        <th>Kuantitas Produk</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -38,20 +39,13 @@
                         <td>{{ $item->kode_produksi }}</td>
                         <td>{{ $item->tanggal }}</td>
                         <td>{{ $item->produk->nama ?? '-' }}</td>
-                        <td class="text-center">
-                                <form action="{{ route('proses_produksi.toggleStatus', $item->id_proses) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PATCH')
-                                    @if($item->status)
-                                        <button class="btn btn-sm btn-success" title="Klik untuk nonaktifkan">
-                                            Selesai
-                                        </button>
-                                    @else
-                                        <button class="btn btn-sm btn-secondary" title="Klik untuk aktifkan">
-                                            Proses
-                                        </button>
-                                    @endif
-                                </form>
+                        <td>{{ $item->kuantitas }}</td>
+                        <td>
+                                @if($item->status)
+                                    <span class="badge bg-success">Selesai</span>
+                                @else
+                                    <span class="badge bg-warning text-dark">Proses</span>
+                                @endif
                             </td>
                         <td class="text-center">
                             <!-- Modal Detail -->
@@ -63,10 +57,10 @@
                                 <i class="bx bx-pencil"></i>
                             </a>
 
-                            <form action="{{ route('proses-produksi.destroy', $item->id_proses) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                            {{-- <form action="{{ route('proses-produksi.destroy', $item->id_proses) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-danger"><i class="bx bx-trash-alt"></i></button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                     @empty

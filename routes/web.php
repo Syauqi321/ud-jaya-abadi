@@ -47,7 +47,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 Route::resource('bahan', BahanController::class);
 Route::resource('produk', ProdukController::class);
 Route::resource('harga-jual', HargaJualController::class);
-Route::patch('/harga-jual/{id}/toggle-status', [HargaJualController::class, 'toggleStatus'])->name('harga_jual.toggleStatus');
 Route::resource('pelanggan', PelangganController::class);
 
 /*
@@ -65,7 +64,6 @@ Route::resource('penjualan', PenjualanController::class);
 */
 Route::resource('proses-produksi', ProsesProduksiController::class);
 Route::resource('hasil-produksi', HasilProduksiController::class);
-Route::patch('/proses-produksi/{id}/toggle-status', [ProsesproduksiController::class, 'toggleStatus'])->name('proses_produksi.toggleStatus');
 
 /*
 |---------------------------------------------------------------------------

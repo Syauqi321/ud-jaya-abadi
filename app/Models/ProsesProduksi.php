@@ -8,7 +8,7 @@ class ProsesProduksi extends Model
 {
     protected $table = 'proses_produksi';
     protected $primaryKey = 'id_proses';
-    protected $fillable = ['kode_produksi', 'tanggal', 'id_produk', 'kuantitas', 'keterangan'];
+    protected $fillable = ['kode_produksi', 'tanggal', 'id_produk', 'kuantitas', 'keterangan', 'status'];
 
     public function produk()
     {

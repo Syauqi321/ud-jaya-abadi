@@ -13,37 +13,49 @@ class ProsesProduksiController extends Controller
 {
     public function index()
     {
-        $produksi = ProsesProduksi::with('detailProses.bahan')->get();
+        $produksi = ProsesProduksi::with('detailProses.bahan', 'produk')->get();
         return view('produksi.proses-produksi.index', compact('produksi'));
     }
 
     public function create()
     {
         $bahan = Bahan::all();
-        return view('produksi.proses-produksi.create', compact('bahan'));
+        $produk = Produk::all();
+        return view('produksi.proses-produksi.create', compact('bahan', 'produk'));
     }
+
 
     public function store(Request $request)
     {
+        // Filter detail kosong
         $filteredDetails = collect($request->details)->filter(function ($detail) {
             return !empty($detail['id_bahan']) && !empty($detail['kuantitas']);
-        })->values()->all(); // reset index array
+        })->values()->all();
 
         $request->merge(['details' => $filteredDetails]);
 
+        // Validasi
         $request->validate([
             'tanggal' => 'required|date',
+            'id_produk' => 'required|exists:produk,id_produk',
+            // 'kuantitas' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string',
             'details.*.id_bahan' => 'required|exists:bahan,id_bahan',
             'details.*.kuantitas' => 'required|numeric|min:1',
-            'status' => 'nullable|boolean',
         ]);
 
         DB::transaction(function () use ($request) {
+            // Simpan data proses
             $proses = ProsesProduksi::create([
                 'kode_produksi' => $this->generateKodeProduksi(),
                 'tanggal' => $request->tanggal,
+                'id_produk' => $request->id_produk,
+                'kuantitas' => $request->kuantitas,
+                'keterangan' => $request->keterangan,
+                'status' => $request->kuantitas > 0 ? 1 : 0,
             ]);
 
+            // Simpan detail proses dan kurangi stok bahan
             foreach ($request->details as $detail) {
                 DetailProses::create([
                     'id_proses' => $proses->id_proses,
@@ -52,13 +64,20 @@ class ProsesProduksiController extends Controller
                 ]);
 
                 $bahan = Bahan::findOrFail($detail['id_bahan']);
-                $bahan->stok -= $detail['kuantitas']; // misal proses mengurangi stok
+                $bahan->stok -= $detail['kuantitas'];
                 $bahan->save();
             }
+
+            // Tambahkan stok ke produk hasil produksi
+            $produk = Produk::findOrFail($request->id_produk);
+            $produk->stok += $request->kuantitas;
+            $produk->save();
         });
 
         return redirect()->route('proses-produksi.index')->with('success', 'Data proses produksi berhasil disimpan.');
     }
+
+
 
 
     public function show($id)
@@ -82,7 +101,7 @@ class ProsesProduksiController extends Controller
         $request->validate([
             'tanggal' => 'required|date',
             'id_produk' => 'required|exists:produk,id_produk',
-            'kuantitas' => 'required|numeric|min:1',
+            'kuantitas' => 'required|numeric|min:0',
             'keterangan' => 'nullable|string',
             'details.*.id_bahan' => 'required|exists:bahan,id_bahan',
             'details.*.kuantitas' => 'required|numeric|min:1',
@@ -92,24 +111,32 @@ class ProsesProduksiController extends Controller
         DB::transaction(function () use ($request, $id) {
             $proses = ProsesProduksi::with('detailProses')->findOrFail($id);
 
-            // Kembalikan stok bahan dari data lama
+            // ✅ 1. Kembalikan stok bahan lama
             foreach ($proses->detailProses as $detailLama) {
                 $bahan = Bahan::findOrFail($detailLama->id_bahan);
                 $bahan->stok += $detailLama->kuantitas;
                 $bahan->save();
             }
 
-            // Update proses
+            // ✅ 2. Kembalikan stok produk hasil lama
+            $produkLama = Produk::findOrFail($proses->id_produk);
+            $produkLama->stok -= $proses->kuantitas;
+            $produkLama->save();
+
+            // ✅ 3. Update proses produksi
             $proses->update([
                 'kode_produksi' => $this->generateKodeProduksi(),
                 'tanggal' => $request->tanggal,
                 'id_produk' => $request->id_produk,
                 'kuantitas' => $request->kuantitas,
                 'keterangan' => $request->keterangan,
+                'status' => $request->kuantitas > 0 ? 1 : 0,
             ]);
 
+            // ✅ 4. Hapus detail proses lama
             $proses->detailProses()->delete();
 
+            // ✅ 5. Simpan detail proses baru dan kurangi stok bahan
             foreach ($request->details as $detail) {
                 DetailProses::create([
                     'id_proses' => $proses->id_proses,
@@ -121,10 +148,16 @@ class ProsesProduksiController extends Controller
                 $bahan->stok -= $detail['kuantitas'];
                 $bahan->save();
             }
+
+            // ✅ 6. Tambahkan stok produk baru
+            $produkBaru = Produk::findOrFail($request->id_produk);
+            $produkBaru->stok += $request->kuantitas;
+            $produkBaru->save();
         });
 
         return redirect()->route('proses-produksi.index')->with('success', 'Proses produksi berhasil diperbarui dan stok disesuaikan.');
     }
+
 
     public function destroy($id)
     {
@@ -143,14 +176,6 @@ class ProsesProduksiController extends Controller
         return redirect()->route('proses-produksi.index')->with('success', 'Proses produksi berhasil dihapus dan stok dikembalikan.');
     }
 
-    public function toggleStatus($id)
-    {
-        $proses = ProsesProduksi::findOrFail($id);
-        $proses->status = !$proses->status; // toggle true <-> false
-        $proses->save();
-
-        return redirect()->route('proses-produksi.index')->with('success', 'Status berhasil diperbarui.');
-    }
 
     private function generateKodeProduksi()
     {

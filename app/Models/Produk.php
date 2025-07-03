@@ -16,11 +16,10 @@ class Produk extends Model
     }
 
     // Relasi untuk harga jual aktif (status = true)
-    public function hargaJualAktif()
+    // Di model Produk
+    public function hargaJualTerbaru()
     {
-        return $this->hasOne(HargaJual::class, 'id_produk')
-                    ->where('status', true)
-                    ->latest('tanggal');
+        return $this->hasOne(HargaJual::class, 'id_produk')->latestOfMany('tanggal');
     }
 
     public function detailPenjualan()
@@ -28,8 +27,8 @@ class Produk extends Model
         return $this->hasMany(DetailPenjualan::class, 'id_produk');
     }
 
-    public function dataHasilProduksi()
+    public function prosesProduksi()
     {
-        return $this->hasMany(DataHasilProduksi::class, 'id_produk');
+        return $this->hasMany(prosesProduksi::class, 'id_produk');
     }
 }
