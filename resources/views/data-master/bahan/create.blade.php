@@ -24,7 +24,7 @@
             </div>
             <div class="mb-3">
                 <label for="stok" class="form-label">Stok</label>
-                <input type="number" class="form-control" id="stok" name="stok" value="{{ old('stok', 0) }}" min="0" required>
+                <input type="number" class="form-control" id="stok" name="stok" value="{{ old('stok') }}" min="0" required>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('bahan.index') }}" class="btn btn-secondary">Batal</a>
