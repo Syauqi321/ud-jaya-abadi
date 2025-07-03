@@ -30,7 +30,6 @@
                             <th>Nama Produk</th>
                             <th>Tanggal</th>
                             <th>Harga</th>
-                            <th>Status</th>
                             <th style="width: 15%;" class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -41,21 +40,7 @@
                             <td>{{ $item->produk->nama ?? '-' }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                             <td>Rp {{ number_format($item->harga, 0, ',', '.') }}/kg</td>
-                            <td class="text-center">
-                                <form action="{{ route('harga_jual.toggleStatus', $item->id_harga) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PATCH')
-                                    @if($item->status)
-                                        <button class="btn btn-sm btn-success" title="Klik untuk nonaktifkan">
-                                            Aktif
-                                        </button>
-                                    @else
-                                        <button class="btn btn-sm btn-secondary" title="Klik untuk aktifkan">
-                                            Tidak Aktif
-                                        </button>
-                                    @endif
-                                </form>
-                            </td>
+
                             <td class="text-center">
                                 <a href="{{ route('harga-jual.edit', $item->id_harga) }}" class="btn btn-icon btn-sm btn-warning me-1" title="Edit">
                                     <i class="bx bx-pencil"></i>

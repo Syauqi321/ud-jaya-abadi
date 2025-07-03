@@ -26,120 +26,120 @@ class PenjualanController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'id_pelanggan' => 'required',
-        'tanggal' => 'required|date',
-        'details.*.id_produk' => 'required|exists:produk,id_produk',
-        'details.*.kuantitas' => 'required|numeric|min:1',
-    ]);
-
-    DB::transaction(function () use ($request) {
-        $penjualan = Penjualan::create([
-            'id_pelanggan' => $request->id_pelanggan,
-            'tanggal' => $request->tanggal
+    {
+        $request->validate([
+            'id_pelanggan' => 'required',
+            'tanggal' => 'required|date',
+            'details.*.id_produk' => 'required|exists:produk,id_produk',
+            'details.*.kuantitas' => 'required|numeric|min:1',
         ]);
 
-        foreach ($request->details as $detail) {
-            // Ambil harga jual aktif
-            $hargaJual = HargaJual::where('id_produk', $detail['id_produk'])
-                ->where('status', true)
-                ->latest('tanggal') // Ambil yang terbaru
-                ->first();
-
-            if (!$hargaJual) {
-                throw new \Exception("Harga jual untuk produk ID {$detail['id_produk']} belum diatur.");
-            }
-
-            // Kurangi stok
-            $produk = Produk::findOrFail($detail['id_produk']);
-            if ($produk->stok < $detail['kuantitas']) {
-                throw new \Exception("Stok produk '{$produk->nama_produk}' tidak mencukupi.");
-            }
-
-            $produk->stok -= $detail['kuantitas'];
-            $produk->save();
-
-            // Simpan detail penjualan
-            $penjualan->detailPenjualan()->create([
-                'id_produk' => $detail['id_produk'],
-                'kuantitas' => $detail['kuantitas'],
-                'harga_jual' => $hargaJual->harga,
+        DB::transaction(function () use ($request) {
+            $penjualan = Penjualan::create([
+                'id_pelanggan' => $request->id_pelanggan,
+                'tanggal' => $request->tanggal
             ]);
-        }
-    });
 
-    return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil disimpan dan harga jual otomatis diambil.');
-}
+            foreach ($request->details as $detail) {
+                // Ambil harga jual terbaru berdasarkan tanggal
+                $hargaJual = HargaJual::where('id_produk', $detail['id_produk'])
+                    ->latest('tanggal')
+                    ->first();
+
+                if (!$hargaJual) {
+                    throw new \Exception("Harga jual untuk produk ID {$detail['id_produk']} belum diatur.");
+                }
+
+                // Kurangi stok
+                $produk = Produk::findOrFail($detail['id_produk']);
+                if ($produk->stok < $detail['kuantitas']) {
+                    throw new \Exception("Stok produk '{$produk->nama_produk}' tidak mencukupi.");
+                }
+
+                $produk->stok -= $detail['kuantitas'];
+                $produk->save();
+
+                // Simpan detail penjualan
+                $penjualan->detailPenjualan()->create([
+                    'id_produk' => $detail['id_produk'],
+                    'kuantitas' => $detail['kuantitas'],
+                    'harga_jual' => $hargaJual->harga,
+                ]);
+            }
+        });
+
+        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil disimpan dan harga jual otomatis diambil.');
+    }
+
 
     public function edit($id)
-{
-    $penjualan = Penjualan::with('detailPenjualan')->findOrFail($id);
-    $pelanggan = Pelanggan::all();
-    $produk = Produk::all();
-
-    return view('transaksi.penjualan.edit', compact('penjualan', 'pelanggan', 'produk'));
-}
-
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'id_pelanggan' => 'required',
-        'tanggal' => 'required|date',
-        'details.*.id_produk' => 'required|exists:produk,id_produk',
-        'details.*.kuantitas' => 'required|numeric|min:1',
-    ]);
-
-    DB::transaction(function () use ($request, $id) {
+    {
         $penjualan = Penjualan::with('detailPenjualan')->findOrFail($id);
+        $pelanggan = Pelanggan::all();
+        $produk = Produk::all();
 
-        // Kembalikan stok karena akan diubah
-        foreach ($penjualan->detailPenjualan as $detail) {
-            $produk = Produk::find($detail->id_produk);
-            if ($produk) {
-                $produk->stok += $detail->kuantitas;
-                $produk->save();
-            }
-        }
+        return view('transaksi.penjualan.edit', compact('penjualan', 'pelanggan', 'produk'));
+    }
 
-        // Hapus detail lama
-        $penjualan->detailPenjualan()->delete();
-
-        // Update header
-        $penjualan->update([
-            'id_pelanggan' => $request->id_pelanggan,
-            'tanggal' => $request->tanggal
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'id_pelanggan' => 'required',
+            'tanggal' => 'required|date',
+            'details.*.id_produk' => 'required|exists:produk,id_produk',
+            'details.*.kuantitas' => 'required|numeric|min:1',
         ]);
 
-        // Simpan detail baru
-        foreach ($request->details as $detail) {
-            $hargaJual = HargaJual::where('id_produk', $detail['id_produk'])
-                ->where('status', true)
-                ->latest('tanggal')
-                ->first();
+        DB::transaction(function () use ($request, $id) {
+            $penjualan = Penjualan::with('detailPenjualan')->findOrFail($id);
 
-            if (!$hargaJual) {
-                throw new \Exception("Harga jual untuk produk ID {$detail['id_produk']} belum diatur.");
+            // Kembalikan stok karena akan diubah
+            foreach ($penjualan->detailPenjualan as $detail) {
+                $produk = Produk::find($detail->id_produk);
+                if ($produk) {
+                    $produk->stok += $detail->kuantitas;
+                    $produk->save();
+                }
             }
 
-            $produk = Produk::findOrFail($detail['id_produk']);
-            if ($produk->stok < $detail['kuantitas']) {
-                throw new \Exception("Stok produk '{$produk->nama_produk}' tidak mencukupi.");
-            }
+            // Hapus detail lama
+            $penjualan->detailPenjualan()->delete();
 
-            $produk->stok -= $detail['kuantitas'];
-            $produk->save();
-
-            $penjualan->detailPenjualan()->create([
-                'id_produk' => $detail['id_produk'],
-                'kuantitas' => $detail['kuantitas'],
-                'harga_jual' => $hargaJual->harga,
+            // Update header
+            $penjualan->update([
+                'id_pelanggan' => $request->id_pelanggan,
+                'tanggal' => $request->tanggal
             ]);
-        }
-    });
 
-    return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil diperbarui.');
-}
+            // Simpan detail baru
+            foreach ($request->details as $detail) {
+                // Ambil harga jual terbaru berdasarkan tanggal
+                $hargaJual = HargaJual::where('id_produk', $detail['id_produk'])
+                    ->latest('tanggal')
+                    ->first();
+
+                if (!$hargaJual) {
+                    throw new \Exception("Harga jual untuk produk ID {$detail['id_produk']} belum diatur.");
+                }
+
+                $produk = Produk::findOrFail($detail['id_produk']);
+                if ($produk->stok < $detail['kuantitas']) {
+                    throw new \Exception("Stok produk '{$produk->nama_produk}' tidak mencukupi.");
+                }
+
+                $produk->stok -= $detail['kuantitas'];
+                $produk->save();
+
+                $penjualan->detailPenjualan()->create([
+                    'id_produk' => $detail['id_produk'],
+                    'kuantitas' => $detail['kuantitas'],
+                    'harga_jual' => $hargaJual->harga,
+                ]);
+            }
+        });
+
+        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil diperbarui.');
+    }
 
 
     public function destroy($id)
