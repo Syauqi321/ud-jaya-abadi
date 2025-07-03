@@ -49,7 +49,7 @@
                                 <td>{{ $item->kuantitas ?? 0 }} kg</td>
                                 <td>
                                     @php
-                                        $hargaJual = $item->produk->hargaJualAktif;
+                                    $hargaJual = $item->produk->hargaJualTerbaru;
                                     @endphp
                                     {{ $hargaJual ? 'Rp ' . number_format($hargaJual->harga, 0, ',', '.') . '/kg' : '-' }}
                                 </td>

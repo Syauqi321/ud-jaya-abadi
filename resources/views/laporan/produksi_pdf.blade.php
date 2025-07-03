@@ -92,22 +92,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($produksi as $data)
-                @foreach ($data->dataHasilProduksi as $hasil)
+            @foreach ($produksi as $item)
                     <tr>
-                        <td class="text-center">{{ $hasil->prosesProduksi->kode_produksi ?? '-' }}</td>
-                        <td class="text-center">{{ $data->tanggal }}</td>
-                        <td class="text-center">{{ $hasil->produk->nama ?? '-' }}</td>
-                        <td class="text-center">{{ number_format($data->detailProses->sum('kuantitas'), 1, ',', '.') ?? 0 }} kg</td>
-                        <td class="text-center">{{ number_format($hasil->kuantitas ?? 0, 1, ',', '.') }} kg</td>
+                        <td class="text-center">{{ $item->kode_produksi ?? '-' }}</td>
+                        <td class="text-center">{{ $item->tanggal }}</td>
+                        <td class="text-center">{{ $item->produk->nama ?? '-' }}</td>
+                        <td class="text-center">{{ number_format($item->detailProses->sum('kuantitas'), 1, ',', '.') ?? 0 }} kg</td>
+                        <td class="text-center">{{ number_format($item->kuantitas ?? 0, 1, ',', '.') }} kg</td>
                         <td class="text-center">
                             @php
-                                $harga = $hasil->produk->hargaJualAktif ?? null;
+                                $hargaJual = $item->produk->hargaJualTerbaru;
                             @endphp
-                            {{ $harga ? 'Rp ' . number_format($harga->harga, 0, ',', '.') . '/kg' : '-' }}
+                            {{ $hargaJual ? 'Rp ' . number_format($hargaJual->harga, 0, ',', '.') . '/kg' : '-' }}
                         </td>
                     </tr>
-                @endforeach
             @endforeach
         </tbody>
     </table>
